@@ -194,8 +194,7 @@
                 </div>
                 <div class="footer-section">
                     <h4>Kontakt</h4>
-                    <p><i class="fas fa-envelope"></i> info@ahnenforscher.de</p>
-                    <p><i class="fas fa-phone"></i> +49 123 456 789</p>
+                    <p><i class="fas fa-envelope"></i> info@ahnenforscher.ch</p>
                 </div>
             </div>
             <div class="footer-bottom">
