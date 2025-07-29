@@ -113,15 +113,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Download functionality
+// Download functionality - now using direct links
 function downloadFile(filename) {
-    // Simulate download
+    // This function is kept for compatibility but downloads are now handled by direct links
     showNotification(`Download von ${filename} gestartet...`, 'info');
-    
-    // In a real application, this would trigger an actual download
-    setTimeout(() => {
-        showNotification(`${filename} erfolgreich heruntergeladen!`, 'success');
-    }, 2000);
 }
 
 // License ordering functionality

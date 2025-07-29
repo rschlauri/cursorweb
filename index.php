@@ -56,47 +56,32 @@
                 <div class="download-grid">
                     <div class="download-card">
                         <div class="download-icon">
-                            <i class="fas fa-file-code"></i>
+                            <i class="fas fa-download"></i>
                         </div>
-                        <h3>Ahnenforschung Starter Kit</h3>
-                        <p>Komplettes Ahnenforschungs-Tool mit modernem Design und Sicherheitsfeatures.</p>
+                        <h3>Ahnenforscher Installation</h3>
+                        <p>Installationsdatei für das Ahnenforscher Programm. Führen Sie diese Datei aus, um das Programm zu installieren.</p>
                         <div class="download-info">
-                            <span class="version">v2.1.0</span>
-                            <span class="size">15.2 MB</span>
+                            <span class="version">v1.0</span>
+                            <span class="size">5.2 MB</span>
                         </div>
-                        <button class="btn btn-download" onclick="downloadFile('php-starter-kit.zip')">
+                        <a href="download/ahndisk.exe" class="btn btn-download" download>
                             <i class="fas fa-download"></i> Herunterladen
-                        </button>
+                        </a>
                     </div>
                     
                     <div class="download-card">
                         <div class="download-icon">
-                            <i class="fas fa-palette"></i>
+                            <i class="fas fa-question-circle"></i>
                         </div>
-                        <h3>Genealogie Framework</h3>
-                        <p>Modernes Genealogie-Framework mit Dark Blue Theme und Responsive Design.</p>
+                        <h3>Hilfe-Datei</h3>
+                        <p>Umfassende Hilfe-Dokumentation für das Ahnenforscher Programm. Enthält Anleitungen und FAQs.</p>
                         <div class="download-info">
-                            <span class="version">v1.8.5</span>
-                            <span class="size">8.7 MB</span>
+                            <span class="version">v1.0</span>
+                            <span class="size">2.1 MB</span>
                         </div>
-                        <button class="btn btn-download" onclick="downloadFile('css-framework.zip')">
+                        <a href="download/Ahnenforscher.chm" class="btn btn-download" download>
                             <i class="fas fa-download"></i> Herunterladen
-                        </button>
-                    </div>
-                    
-                    <div class="download-card">
-                        <div class="download-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3>Ahnenforschung Mobile App</h3>
-                        <p>Responsive Mobile-First Ahnenforschungs-App mit PWA-Features.</p>
-                        <div class="download-info">
-                            <span class="version">v3.2.1</span>
-                            <span class="size">22.1 MB</span>
-                        </div>
-                        <button class="btn btn-download" onclick="downloadFile('mobile-template.zip')">
-                            <i class="fas fa-download"></i> Herunterladen
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
