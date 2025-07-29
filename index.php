@@ -147,6 +147,34 @@
         <section id="contact" class="contact">
             <div class="container">
                 <h2><i class="fas fa-shopping-cart"></i> Lizenzbestellung</h2>
+                
+                <div class="payment-info">
+                    <div class="payment-card">
+                        <h3><i class="fas fa-credit-card"></i> Kosten & Zahlungsinformationen</h3>
+                        <div class="payment-details">
+                            <div class="price-info">
+                                <h4>Lizenzkosten:</h4>
+                                <ul>
+                                    <li><strong>Ahnenforscher-Lizenz:</strong> Fr. 80.- oder Euro 70.-</li>
+                                    <li><strong>Update auf Ahnenforscher 6:</strong> Fr. 50.- (Euro 45.-)</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bank-info">
+                                <h4>Zahlungsinformationen:</h4>
+                                <p><strong>Vorauszahlung</strong> in bar oder per Überweisung auf:</p>
+                                <div class="bank-details">
+                                    <p><strong>Konto:</strong> 0256-686898.40J</p>
+                                    <p><strong>Bank:</strong> UBS AG, CH-9500 Wil</p>
+                                    <p><strong>SWIFT-Code:</strong> UBSWCHZH95A</p>
+                                    <p><strong>Zugunsten:</strong> Remo Schlauri, 9524 Zuzwil</p>
+                                    <p><strong>IBAN:</strong> CH46 0025 6256 6868 9840 J</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="license-order-container">
                     <form class="license-order-form" method="POST" action="process.php">
                         <div class="form-row">
