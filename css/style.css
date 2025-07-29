@@ -429,27 +429,28 @@ body {
 }
 
 .contact h2 i {
-    color: #10b981;
+    color: #fbbf24;
 }
 
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    margin-top: 3rem;
-}
-
-.contact-form-container {
+.license-order-container {
+    max-width: 600px;
+    margin: 0 auto;
     background: rgba(30, 41, 59, 0.8);
-    padding: 2rem;
+    padding: 3rem;
     border-radius: 16px;
     border: 1px solid rgba(59, 130, 246, 0.2);
 }
 
-.contact-form {
+.license-order-form {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
 }
 
 .form-group {
@@ -508,70 +509,15 @@ body {
     box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
 }
 
-/* Email Generator */
-.email-generator {
-    background: rgba(30, 41, 59, 0.8);
-    padding: 2rem;
-    border-radius: 16px;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.email-generator h3 {
-    color: #e2e8f0;
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.email-generator h3 i {
-    color: #8b5cf6;
-}
-
-.generator-controls {
-    margin-bottom: 2rem;
-}
-
-.btn-generate {
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+.btn-order {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    font-size: 1.1rem;
+    padding: 1rem 3rem;
     margin-top: 1rem;
 }
 
-.btn-generate:hover {
-    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.4);
-}
-
-.generated-email {
-    background: rgba(15, 23, 42, 0.8);
-    padding: 1.5rem;
-    border-radius: 8px;
-    border: 1px solid rgba(59, 130, 246, 0.2);
-}
-
-.generated-email h4 {
-    color: #e2e8f0;
-    margin-bottom: 1rem;
-}
-
-.email-content {
-    background: rgba(30, 41, 59, 0.8);
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    min-height: 100px;
-    color: #94a3b8;
-    font-family: 'Courier New', monospace;
-    font-size: 0.9rem;
-    line-height: 1.6;
-}
-
-.btn-copy {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    width: 100%;
-}
-
-.btn-copy:hover {
-    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+.btn-order:hover {
+    box-shadow: 0 8px 25px rgba(251, 191, 36, 0.4);
 }
 
 /* Footer */

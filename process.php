@@ -26,31 +26,51 @@ function isValidEmail($email) {
     return filter_var($email, FILTER_VALIDATE_EMAIL);
 }
 
+// Function to send email
+function sendEmail($vorname, $name, $ort, $email) {
+    $to = 'info@ahnenforscher.ch';
+    $subject = 'Neue Lizenzbestellung - Ahnenforscher';
+    
+    $message = "Neue Lizenzbestellung eingegangen:\n\n";
+    $message .= "Vorname: $vorname\n";
+    $message .= "Name: $name\n";
+    $message .= "Ort: $ort\n";
+    $message .= "E-Mail: $email\n\n";
+    $message .= "Datum: " . date('d.m.Y H:i:s') . "\n";
+    $message .= "IP-Adresse: " . ($_SERVER['REMOTE_ADDR'] ?? 'Unbekannt') . "\n";
+    
+    $headers = "From: $email\r\n";
+    $headers .= "Reply-To: $email\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    
+    return mail($to, $subject, $message, $headers);
+}
+
 // Get form data
+$vorname = isset($_POST['vorname']) ? sanitizeInput($_POST['vorname']) : '';
 $name = isset($_POST['name']) ? sanitizeInput($_POST['name']) : '';
+$ort = isset($_POST['ort']) ? sanitizeInput($_POST['ort']) : '';
 $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
-$subject = isset($_POST['subject']) ? sanitizeInput($_POST['subject']) : '';
-$message = isset($_POST['message']) ? sanitizeInput($_POST['message']) : '';
 
 // Validation
 $errors = [];
 
+if (empty($vorname)) {
+    $errors[] = 'Vorname ist erforderlich';
+}
+
 if (empty($name)) {
     $errors[] = 'Name ist erforderlich';
+}
+
+if (empty($ort)) {
+    $errors[] = 'Ort ist erforderlich';
 }
 
 if (empty($email)) {
     $errors[] = 'E-Mail ist erforderlich';
 } elseif (!isValidEmail($email)) {
     $errors[] = 'Bitte geben Sie eine gültige E-Mail-Adresse ein';
-}
-
-if (empty($subject)) {
-    $errors[] = 'Betreff ist erforderlich';
-}
-
-if (empty($message)) {
-    $errors[] = 'Nachricht ist erforderlich';
 }
 
 // Check for errors
@@ -65,37 +85,49 @@ if (!empty($errors)) {
 
 // If validation passes, process the form
 try {
-    // Create a log entry (in a real application, you might save to database or send email)
+    // Create a log entry
     $logEntry = [
         'timestamp' => date('Y-m-d H:i:s'),
+        'vorname' => $vorname,
         'name' => $name,
+        'ort' => $ort,
         'email' => $email,
-        'subject' => $subject,
-        'message' => $message,
         'ip' => $_SERVER['REMOTE_ADDR'] ?? 'Unbekannt'
     ];
     
-    // Save to a log file (optional)
-    $logFile = 'contact_log.txt';
+    // Save to a log file
+    $logFile = 'license_orders.txt';
     $logData = json_encode($logEntry) . "\n";
     file_put_contents($logFile, $logData, FILE_APPEND | LOCK_EX);
     
-    // In a real application, you would:
-    // 1. Save to database
-    // 2. Send email notification
-    // 3. Send confirmation email to user
+    // Send email to info@ahnenforscher.ch
+    $emailSent = sendEmail($vorname, $name, $ort, $email);
     
-    // For demo purposes, we'll just return success
-    echo json_encode([
-        'success' => true,
-        'message' => 'Vielen Dank für Ihre Nachricht! Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.',
-        'data' => [
-            'name' => $name,
-            'email' => $email,
-            'subject' => $subject,
-            'timestamp' => date('Y-m-d H:i:s')
-        ]
-    ]);
+    if ($emailSent) {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Vielen Dank für Ihre Lizenzbestellung! Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.',
+            'data' => [
+                'vorname' => $vorname,
+                'name' => $name,
+                'ort' => $ort,
+                'email' => $email,
+                'timestamp' => date('Y-m-d H:i:s')
+            ]
+        ]);
+    } else {
+        echo json_encode([
+            'success' => true,
+            'message' => 'Ihre Bestellung wurde registriert. Wir werden uns bald bei Ihnen melden.',
+            'data' => [
+                'vorname' => $vorname,
+                'name' => $name,
+                'ort' => $ort,
+                'email' => $email,
+                'timestamp' => date('Y-m-d H:i:s')
+            ]
+        ]);
+    }
     
 } catch (Exception $e) {
     http_response_code(500);

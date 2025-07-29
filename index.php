@@ -146,68 +146,33 @@
 
         <section id="contact" class="contact">
             <div class="container">
-                <h2><i class="fas fa-envelope"></i> Kontakt & E-Mail Generator</h2>
-                <div class="contact-grid">
-                    <div class="contact-form-container">
-                        <form class="contact-form" method="POST" action="process.php">
+                <h2><i class="fas fa-shopping-cart"></i> Lizenzbestellung</h2>
+                <div class="license-order-container">
+                    <form class="license-order-form" method="POST" action="process.php">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="vorname">Vorname:</label>
+                                <input type="text" id="vorname" name="vorname" required>
+                            </div>
                             <div class="form-group">
                                 <label for="name">Name:</label>
                                 <input type="text" id="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ort">Ort:</label>
+                                <input type="text" id="ort" name="ort" required>
                             </div>
                             <div class="form-group">
                                 <label for="email">E-Mail:</label>
                                 <input type="email" id="email" name="email" required>
                             </div>
-                            <div class="form-group">
-                                <label for="subject">Betreff:</label>
-                                <select id="subject" name="subject" required>
-                                    <option value="">Bitte wählen...</option>
-                                    <option value="support">Technischer Support</option>
-                                    <option value="sales">Verkauf & Beratung</option>
-                                    <option value="partnership">Partnerschaft</option>
-                                    <option value="other">Sonstiges</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Nachricht:</label>
-                                <textarea id="message" name="message" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn">
-                                <i class="fas fa-paper-plane"></i> Nachricht senden
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="email-generator">
-                        <h3><i class="fas fa-magic"></i> E-Mail Generator</h3>
-                        <div class="generator-controls">
-                            <div class="form-group">
-                                <label for="emailType">E-Mail Typ:</label>
-                                <select id="emailType">
-                                    <option value="welcome">Willkommens-E-Mail</option>
-                                    <option value="support">Support-Anfrage</option>
-                                    <option value="invoice">Rechnung</option>
-                                    <option value="newsletter">Newsletter</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="recipientName">Empfänger Name:</label>
-                                <input type="text" id="recipientName" placeholder="Max Mustermann">
-                            </div>
-                            <button class="btn btn-generate" onclick="generateEmail()">
-                                <i class="fas fa-magic"></i> E-Mail generieren
-                            </button>
                         </div>
-                        <div class="generated-email">
-                            <h4>Generierte E-Mail:</h4>
-                            <div id="emailContent" class="email-content">
-                                <p>Wählen Sie einen E-Mail-Typ und klicken Sie auf "E-Mail generieren".</p>
-                            </div>
-                            <button class="btn btn-copy" onclick="copyEmail()">
-                                <i class="fas fa-copy"></i> Kopieren
-                            </button>
-                        </div>
-                    </div>
+                        <button type="submit" class="btn btn-order">
+                            <i class="fas fa-shopping-cart"></i> Bestellen
+                        </button>
+                    </form>
                 </div>
             </div>
         </section>

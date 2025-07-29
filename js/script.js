@@ -20,21 +20,21 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Form validation and submission
-    const contactForm = document.querySelector('.contact-form');
+    const licenseOrderForm = document.querySelector('.license-order-form');
     
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
+    if (licenseOrderForm) {
+        licenseOrderForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Get form data
             const formData = new FormData(this);
+            const vorname = formData.get('vorname');
             const name = formData.get('name');
+            const ort = formData.get('ort');
             const email = formData.get('email');
-            const subject = formData.get('subject');
-            const message = formData.get('message');
             
             // Basic validation
-            if (!name || !email || !subject || !message) {
+            if (!vorname || !name || !ort || !email) {
                 showNotification('Bitte füllen Sie alle Felder aus.', 'error');
                 return;
             }
@@ -44,9 +44,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            // Simulate form submission
-            showNotification('Nachricht erfolgreich gesendet!', 'success');
-            this.reset();
+            // Show processing notification
+            showNotification('Lizenzbestellung wird verarbeitet...', 'info');
+            
+            // Submit form data
+            fetch('process.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showNotification(data.message, 'success');
+                    this.reset();
+                } else {
+                    showNotification(data.errors ? data.errors.join(', ') : 'Ein Fehler ist aufgetreten.', 'error');
+                }
+            })
+            .catch(error => {
+                showNotification('Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.', 'error');
+            });
         });
     }
 
@@ -135,115 +152,7 @@ function orderLicense(licenseType) {
     }, 1500);
 }
 
-// Email generation functionality
-function generateEmail() {
-    const emailType = document.getElementById('emailType').value;
-    const recipientName = document.getElementById('recipientName').value || 'Max Mustermann';
-    const emailContent = document.getElementById('emailContent');
-    
-    const emailTemplates = {
-        'welcome': {
-            subject: 'Willkommen bei Ahnenforscher!',
-            content: `Hallo ${recipientName},
-
-vielen Dank für Ihr Interesse an Ahnenforscher!
-
-Wir freuen uns, Sie als neuen Kunden begrüßen zu dürfen. Unser Team steht Ihnen gerne zur Verfügung, um Ihnen bei der Erforschung Ihrer Familiengeschichte zu unterstützen.
-
-Falls Sie Fragen haben oder Unterstützung benötigen, erreichen Sie uns unter:
-📧 info@ahnenforscher.de
-📞 +49 123 456 789
-
-Mit freundlichen Grüßen
-Ihr Ahnenforscher Team`
-        },
-        'support': {
-            subject: 'Support-Anfrage - Ahnenforscher',
-            content: `Hallo ${recipientName},
-
-vielen Dank für Ihre Support-Anfrage.
-
-Unser genealogisches Team wird sich innerhalb von 24 Stunden mit Ihnen in Verbindung setzen, um Ihr Anliegen zu klären.
-
-Ihre Anfrage wurde mit der Referenznummer #${Math.floor(Math.random() * 10000)} registriert.
-
-Für dringende Angelegenheiten erreichen Sie uns unter:
-📞 +49 123 456 789
-
-Mit freundlichen Grüßen
-Ihr Ahnenforscher Support Team`
-        },
-        'invoice': {
-            subject: 'Rechnung - Ahnenforscher',
-            content: `Hallo ${recipientName},
-
-anbei erhalten Sie Ihre Rechnung für die erbrachten Ahnenforschungsdienstleistungen.
-
-Rechnungsnummer: INV-${Math.floor(Math.random() * 100000)}
-Rechnungsdatum: ${new Date().toLocaleDateString('de-DE')}
-Fälligkeitsdatum: ${new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toLocaleDateString('de-DE')}
-
-Zahlungsinformationen:
-IBAN: DE89 3704 0044 0532 0130 00
-BIC: COBADEFFXXX
-Verwendungszweck: Rechnungsnummer
-
-Vielen Dank für Ihr Vertrauen!
-
-Mit freundlichen Grüßen
-Ihr Ahnenforscher Team`
-        },
-        'newsletter': {
-            subject: 'Ahnenforscher Newsletter - Neueste Updates',
-            content: `Hallo ${recipientName},
-
-hier sind die neuesten Updates und Features von Ahnenforscher:
-
-🚀 Neue Features:
-• Verbesserte Ahnenforschungs-Tools
-• Dark Blue Theme für genealogische Plattformen
-• Erweiterte E-Mail-Generator-Funktionen
-
-📦 Neue Downloads verfügbar:
-• Ahnenforschung Starter Kit v2.1.0
-• Genealogie Framework v1.8.5
-• Ahnenforschung Mobile App v3.2.1
-
-💡 Tipp der Woche:
-Nutzen Sie unseren E-Mail-Generator für professionelle genealogische Kommunikation!
-
-Bleiben Sie auf dem Laufenden und folgen Sie uns auf unseren Social Media Kanälen.
-
-Mit freundlichen Grüßen
-Ihr Ahnenforscher Team`
-        }
-    };
-    
-    if (emailTemplates[emailType]) {
-        const template = emailTemplates[emailType];
-        emailContent.innerHTML = `
-            <div style="margin-bottom: 1rem;">
-                <strong>Betreff:</strong> ${template.subject}
-            </div>
-            <div style="white-space: pre-line;">${template.content}</div>
-        `;
-        showNotification('E-Mail erfolgreich generiert!', 'success');
-    } else {
-        showNotification('Bitte wählen Sie einen E-Mail-Typ aus.', 'error');
-    }
-}
-
-// Copy email content to clipboard
-function copyEmail() {
-    const emailContent = document.getElementById('emailContent');
-    const textToCopy = emailContent.textContent || emailContent.innerText;
-    
-    navigator.clipboard.writeText(textToCopy).then(() => {
-        showNotification('E-Mail-Inhalt in die Zwischenablage kopiert!', 'success');
-    }).catch(() => {
-        showNotification('Fehler beim Kopieren. Bitte manuell kopieren.', 'error');
-    });
-}
+// License order functionality - now handled by the form submission
 
 // Email validation function
 function isValidEmail(email) {
