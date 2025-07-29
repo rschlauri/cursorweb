@@ -197,6 +197,16 @@
                                 <input type="email" id="email" name="email" required>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label for="bemerkung">Bemerkung:</label>
+                            <textarea id="bemerkung" name="bemerkung" rows="3" placeholder="Optionale Bemerkungen oder spezielle Wünsche..."></textarea>
+                        </div>
+                        <?php session_start(); 
+                        $zahl1 = rand(1, 9); $zahl2 = rand(1, 9); $_SESSION['captcha_answer'] = $zahl1 + $zahl2; ?>
+                        <div class="form-group">
+                            <label for="captcha">Bitte lösen Sie: <?php echo $zahl1; ?> + <?php echo $zahl2; ?> = ?</label>
+                            <input type="number" id="captcha" name="captcha" required autocomplete="off">
+                        </div>
                         <button type="submit" class="btn btn-order">
                             <i class="fas fa-shopping-cart"></i> Bestellen
                         </button>

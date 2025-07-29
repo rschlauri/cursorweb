@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Enable error reporting for debugging (remove in production)
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -27,7 +28,7 @@ function isValidEmail($email) {
 }
 
 // Function to send email
-function sendEmail($vorname, $name, $ort, $email) {
+function sendEmail($vorname, $name, $ort, $email, $bemerkung) {
     $to = 'info@ahnenforscher.ch';
     $subject = 'Neue Lizenzbestellung - Ahnenforscher';
     
@@ -35,8 +36,11 @@ function sendEmail($vorname, $name, $ort, $email) {
     $message .= "Vorname: $vorname\n";
     $message .= "Name: $name\n";
     $message .= "Ort: $ort\n";
-    $message .= "E-Mail: $email\n\n";
-    $message .= "Datum: " . date('d.m.Y H:i:s') . "\n";
+    $message .= "E-Mail: $email\n";
+    if (!empty($bemerkung)) {
+        $message .= "Bemerkung: $bemerkung\n";
+    }
+    $message .= "\nDatum: " . date('d.m.Y H:i:s') . "\n";
     $message .= "IP-Adresse: " . ($_SERVER['REMOTE_ADDR'] ?? 'Unbekannt') . "\n";
     
     $headers = "From: $email\r\n";
@@ -51,6 +55,8 @@ $vorname = isset($_POST['vorname']) ? sanitizeInput($_POST['vorname']) : '';
 $name = isset($_POST['name']) ? sanitizeInput($_POST['name']) : '';
 $ort = isset($_POST['ort']) ? sanitizeInput($_POST['ort']) : '';
 $email = isset($_POST['email']) ? sanitizeInput($_POST['email']) : '';
+$bemerkung = isset($_POST['bemerkung']) ? sanitizeInput($_POST['bemerkung']) : '';
+$captcha = isset($_POST['captcha']) ? intval($_POST['captcha']) : null;
 
 // Validation
 $errors = [];
@@ -73,6 +79,11 @@ if (empty($email)) {
     $errors[] = 'Bitte geben Sie eine gültige E-Mail-Adresse ein';
 }
 
+if (!isset($_SESSION['captcha_answer']) || $captcha !== $_SESSION['captcha_answer']) {
+    $errors[] = 'Captcha falsch gelöst. Bitte versuchen Sie es erneut.';
+}
+unset($_SESSION['captcha_answer']);
+
 // Check for errors
 if (!empty($errors)) {
     http_response_code(400);
@@ -92,6 +103,7 @@ try {
         'name' => $name,
         'ort' => $ort,
         'email' => $email,
+        'bemerkung' => $bemerkung,
         'ip' => $_SERVER['REMOTE_ADDR'] ?? 'Unbekannt'
     ];
     
@@ -101,7 +113,7 @@ try {
     file_put_contents($logFile, $logData, FILE_APPEND | LOCK_EX);
     
     // Send email to info@ahnenforscher.ch
-    $emailSent = sendEmail($vorname, $name, $ort, $email);
+    $emailSent = sendEmail($vorname, $name, $ort, $email, $bemerkung);
     
     if ($emailSent) {
         echo json_encode([
